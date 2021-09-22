@@ -5,7 +5,8 @@
   "scripts": {
     "prestart": "./node_modules/react-viro/bin/run_ngrok.sh",
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "npx patch-package"
   },
   "dependencies": {
     "patch-package": "^6.4.7",

@@ -7,21 +7,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   Animated,
-  Easing,
-  Image,
-  ActivityIndicator,
-  Alert,
-  Platform,
 } from 'react-native';
 
 import * as PlatformUtils from './PlatformUtils';
 
-import {
-  ViroARSceneNavigator,
-  ViroARScene,
-  ViroConstants,
-  ViroText,
-} from 'react-viro';
+import { ViroARSceneNavigator } from 'react-viro';
+
+import * as styleConstants from './res/styleConstants';
 
 export default class Frame extends Component {
   constructor(props) {
@@ -29,7 +21,7 @@ export default class Frame extends Component {
 
     // State
     this.state = {
-      instructionOpacity: new Animated.Value(1),
+      instructionOpacity: new Animated.Value(styleConstants.OPACITYVALUES[100]),
       showInstructions: true,
       isReady: false,
       isOverPlane: false,
@@ -66,14 +58,14 @@ export default class Frame extends Component {
       };
 
       let readyButton = {
-        height: 60,
-        width: 130,
+        ...styleConstants.BUTTONCONSTANTS,
         marginTop: 10,
-        borderRadius: 10,
-        backgroundColor: '#fff',
+        backgroundColor: styleConstants.COLORS.WHITE,
         justifyContent: 'center',
         alignItems: 'center',
-        opacity: this.state.isOverPlane ? 1 : 0.5,
+        opacity: this.state.isOverPlane
+          ? styleConstants.OPACITYVALUES[100]
+          : styleConstants.OPACITYVALUES[50],
       };
 
       return (
@@ -84,10 +76,10 @@ export default class Frame extends Component {
             <Text style={styles.instructionText}>{text}</Text>
             <TouchableOpacity
               style={readyButton}
-              opacity={0.5}
+              opacity={styleConstants.OPACITYVALUES[50]}
               onPress={this.ready}
               disabled={!this.state.isOverPlane}
-              activeOpacity={0.6}
+              activeOpacity={styleConstants.OPACITYVALUES[60]}
             >
               <Text style={styles.instructionText}>Place</Text>
             </TouchableOpacity>
@@ -111,10 +103,10 @@ export default class Frame extends Component {
 
     var instructionContainer = {
       position: 'absolute',
-      backgroundColor: '#ffffff33',
+      backgroundColor: styleConstants.COLORS.WHITE20,
       flexDirection: 'column',
       width: '100%',
-      height: 100,
+      height: styleConstants.HEADHERHEIGHT,
       justifyContent: 'center',
       top: 0,
       paddingTop: paddingTop,
@@ -160,7 +152,7 @@ export default class Frame extends Component {
   }
 
   setIsOverPlane(isOverPlane) {
-    if (this.state.isOverPlane != isOverPlane) {
+    if (this.state.isOverPlane !== isOverPlane) {
       this.setState({
         isOverPlane: isOverPlane,
       });
@@ -174,30 +166,23 @@ let paddingTop = PlatformUtils.isIPhoneX()
   : 0;
 
 var styles = StyleSheet.create({
+  instructionText: {
+    color: styleConstants.COLORS.BLACK,
+    fontFamily: styleConstants.FONTCONSTANTS.fontFamily,
+    fontSize: styleConstants.FONTCONSTANTS.fontSizeNormal,
+    textAlign: 'center',
+  },
   outerContainer: {
     flex: 1,
     flexDirection: 'column',
   },
-  titleText: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: '400',
-    textAlign: 'center',
-    fontFamily: 'BebasNeue-Regular',
-  },
-  instructionText: {
-    color: '#000',
-    fontSize: 18,
-    textAlign: 'center',
-    fontFamily: 'BebasNeue-Regular',
-  },
   readyContainer: {
-    position: 'absolute',
-    height: 170,
-    width: '100%',
-    bottom: 0,
-    left: 0,
-    justifyContent: 'center',
     alignItems: 'center',
+    bottom: 0,
+    height: styleConstants.FOOTERHEIGHT,
+    justifyContent: 'center',
+    left: 0,
+    position: 'absolute',
+    width: '100%',
   },
 });

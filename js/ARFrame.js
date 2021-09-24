@@ -2,32 +2,12 @@
 
 import React, { Component } from 'react';
 
-import { StyleSheet } from 'react-native';
-
 import {
   ViroARScene,
-  ViroText,
-  ViroConstants,
-  ViroARImageMarker,
   Viro3DObject,
-  ViroAmbientLight,
-  ViroMaterialVideo,
-  ViroMaterials,
-  ViroAnimations,
   ViroNode,
-  ViroPortal,
-  ViroPortalScene,
-  Viro360Video,
-  Viro360Image,
-  ViroVideo,
   ViroDirectionalLight,
   ViroLightingEnvironment,
-  ViroImage,
-  ViroSound,
-  ViroParticleEmitter,
-  ViroSpotLight,
-  ViroQuad,
-  ViroBox,
 } from 'react-viro';
 
 export default class ARFrame extends Component {
@@ -69,19 +49,11 @@ export default class ARFrame extends Component {
     );
   }
 
-  _onInitialized(state, reason) {
-    if (state === ViroConstants.TRACKING_NORMAL) {
-      this.setState({
-        text: 'Hello World!',
-      });
-    } else if (state === ViroConstants.TRACKING_NONE) {
-      // Handle loss of tracking
-    }
+  _onInitialized() {
+    // Do nothing
   }
 
   _getScanningQuads() {
-    let environmentLightSource = require('./res/learner_park_1k.hdr');
-
     if (this.state.isReady) {
       return;
     }
@@ -131,7 +103,7 @@ export default class ARFrame extends Component {
     if (results.hitTestResults.length > 0) {
       for (var i = 0; i < results.hitTestResults.length; i++) {
         let result = results.hitTestResults[i];
-        if (result.type == 'ExistingPlaneUsingExtent') {
+        if (result.type === 'ExistingPlaneUsingExtent') {
           this.setState({
             planeReticleLocation: result.transform.position,
             displayHitReticle: true,

@@ -7,9 +7,9 @@ import {
   Viro3DObject,
   ViroNode,
   ViroDirectionalLight,
-  ViroLightingEnvironment,
-  ViroAmbientLight
 } from 'react-viro';
+
+import * as styleConstants from './res/styleConstants';
 
 const carScale = 0.05;
 
@@ -26,7 +26,7 @@ export default class ARFrame extends Component {
       planeReticleLocation: [0, 0, 0],
       shouldBillboard: true,
       isReady: false,
-      lastFoundPlaneLocation: [0, 0, 0]
+      lastFoundPlaneLocation: [0, 0, 0],
     };
 
     // Bind Functions
@@ -41,7 +41,7 @@ export default class ARFrame extends Component {
       !this.state.isReady
     ) {
       this.setState({
-        isReady: true
+        isReady: true,
       });
     }
 
@@ -49,18 +49,24 @@ export default class ARFrame extends Component {
       ? undefined
       : this._onCameraARHitTest;
 
-    let environmentLightSource = require('./res/learner_park_1k.hdr');
-
     return (
       <ViroARScene
-        ref={scene => {
+        ref={(scene) => {
           this.scene = scene;
         }}
         onCameraARHitTest={onCameraARHitTestCallback}
         onTrackingUpdated={this._onInitialized}
         physicsWorld={{ gravity: [0, -5, 0] }}
       >
-        <ViroLightingEnvironment source={environmentLightSource} />
+        <ViroDirectionalLight
+          color={styleConstants.COLORS.WHITE}
+          direction={[0.3, -1, 0.2]}
+          shadowOrthographicPosition={[0, 3, -5]}
+          shadowOrthographicSize={10}
+          shadowNearZ={2}
+          shadowFarZ={9}
+          castsShadow={true}
+        />
         {this._getScanningQuads()}
         {this._getCarModel()}
       </ViroARScene>
@@ -92,7 +98,7 @@ export default class ARFrame extends Component {
           visible={this.state.foundPlane}
           resources={[
             require('./res/Voxel_Square_Full.mtl'),
-            require('./res/Voxel_Square_Full.png')
+            require('./res/Voxel_Square_Full.png'),
           ]}
           scale={[0.2, 0.2, 0.2]}
           position={[-1.1, -0.5, 1]}
@@ -103,7 +109,7 @@ export default class ARFrame extends Component {
           visible={!this.state.foundPlane}
           resources={[
             require('./res/Voxel_Square_Corners.mtl'),
-            require('./res/Voxel_Square_Corners.png')
+            require('./res/Voxel_Square_Corners.png'),
           ]}
           scale={[0.2, 0.2, 0.2]}
           position={[-1.1, -0.5, 1]}
@@ -127,24 +133,17 @@ export default class ARFrame extends Component {
         transformBehaviors={transformBehaviors}
       >
         <ViroNode
-          ref={car => {
+          ref={(car) => {
             this.car = car;
           }}
           scale={[carScale, carScale, carScale]}
         >
-          <ViroAmbientLight
-            ref={light => {
-              this.ambientLight = light;
-            }}
-            color={'#f5f8e0'}
-            intensity={200}
-          />
           <Viro3DObject
             source={require('./res/Voxel_Truck.obj')}
             position={[0, 0, 0]}
             resources={[
               require('./res/Voxel_Truck.mtl'),
-              require('./res/Voxel_Truck.png')
+              require('./res/Voxel_Truck.png'),
             ]}
             type='OBJ'
           />
@@ -162,7 +161,7 @@ export default class ARFrame extends Component {
             planeReticleLocation: result.transform.position,
             displayHitReticle: true,
             foundPlane: true,
-            lastFoundPlaneLocation: result.transform.position
+            lastFoundPlaneLocation: result.transform.position,
           });
           this.props.arSceneNavigator.viroAppProps.setIsOverPlane(true);
           return;
@@ -174,7 +173,7 @@ export default class ARFrame extends Component {
     let newPosition = [
       results.cameraOrientation.forward[0] * 1.5,
       results.cameraOrientation.forward[1] * 1.5,
-      results.cameraOrientation.forward[2] * 1.5
+      results.cameraOrientation.forward[2] * 1.5,
     ];
     newPosition[0] = results.cameraOrientation.position[0] + newPosition[0];
     newPosition[1] = results.cameraOrientation.position[1] + newPosition[1];
@@ -182,7 +181,7 @@ export default class ARFrame extends Component {
     this.setState({
       planeReticleLocation: newPosition,
       displayHitReticle: true,
-      foundPlane: false
+      foundPlane: false,
     });
     this.props.arSceneNavigator.viroAppProps.setIsOverPlane(false);
   }

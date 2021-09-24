@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 import {
   ViroARScene,
@@ -9,7 +9,7 @@ import {
   ViroDirectionalLight,
   ViroLightingEnvironment,
   ViroAmbientLight
-} from 'react-viro';
+} from "react-viro";
 
 const carScale = 0.05;
 
@@ -19,7 +19,7 @@ export default class ARFrame extends Component {
 
     // State
     this.state = {
-      text: 'Initializing AR...',
+      text: "Initializing AR...",
       modelWorldRotation: [0, 0, 0],
       displayHitReticle: false,
       foundPlane: false,
@@ -30,6 +30,7 @@ export default class ARFrame extends Component {
     };
 
     // Bind Functions
+    this._onInitialized = this._onInitialized.bind(this);
     this._getScanningQuads = this._getScanningQuads.bind(this);
     this._getCarModel = this._getCarModel.bind(this);
     this._onCameraARHitTest = this._onCameraARHitTest.bind(this);
@@ -49,7 +50,7 @@ export default class ARFrame extends Component {
       ? undefined
       : this._onCameraARHitTest;
 
-    let environmentLightSource = require('./res/learner_park_1k.hdr');
+    let environmentLightSource = require("./res/learner_park_1k.hdr");
 
     return (
       <ViroARScene
@@ -74,7 +75,7 @@ export default class ARFrame extends Component {
 
     return (
       <ViroNode
-        transformBehaviors={'billboardY'}
+        transformBehaviors={"billboardY"}
         position={this.state.planeReticleLocation}
         scale={[0.5, 0.5, 0.5]}
       >
@@ -88,22 +89,22 @@ export default class ARFrame extends Component {
           castsShadow={true}
         />
         <Viro3DObject
-          source={require('./res/Voxel_Square_Full.obj')}
+          source={require("./res/Voxel_Square_Full.obj")}
           visible={this.state.foundPlane}
           resources={[
-            require('./res/Voxel_Square_Full.mtl'),
-            require('./res/Voxel_Square_Full.png')
+            require("./res/Voxel_Square_Full.mtl"),
+            require("./res/Voxel_Square_Full.png")
           ]}
           scale={[0.2, 0.2, 0.2]}
           position={[-1.1, -0.5, 1]}
           type='OBJ'
         />
         <Viro3DObject
-          source={require('./res/Voxel_Square_Corners.obj')}
+          source={require("./res/Voxel_Square_Corners.obj")}
           visible={!this.state.foundPlane}
           resources={[
-            require('./res/Voxel_Square_Corners.mtl'),
-            require('./res/Voxel_Square_Corners.png')
+            require("./res/Voxel_Square_Corners.mtl"),
+            require("./res/Voxel_Square_Corners.png")
           ]}
           scale={[0.2, 0.2, 0.2]}
           position={[-1.1, -0.5, 1]}
@@ -118,7 +119,7 @@ export default class ARFrame extends Component {
       ? this.state.lastFoundPlaneLocation
       : [0, 20, 0];
 
-    var transformBehaviors = this.state.shouldBillboard ? 'billboardY' : [];
+    var transformBehaviors = this.state.shouldBillboard ? "billboardY" : [];
 
     return (
       <ViroNode
@@ -136,15 +137,15 @@ export default class ARFrame extends Component {
             ref={light => {
               this.ambientLight = light;
             }}
-            color={'#f5f8e0'}
+            color={"#f5f8e0"}
             intensity={200}
           />
           <Viro3DObject
-            source={require('./res/Voxel_Truck.obj')}
+            source={require("./res/Voxel_Truck.obj")}
             position={[0, 0, 0]}
             resources={[
-              require('./res/Voxel_Truck.mtl'),
-              require('./res/Voxel_Truck.png')
+              require("./res/Voxel_Truck.mtl"),
+              require("./res/Voxel_Truck.png")
             ]}
             type='OBJ'
           />
@@ -157,7 +158,7 @@ export default class ARFrame extends Component {
     if (results.hitTestResults.length > 0) {
       for (var i = 0; i < results.hitTestResults.length; i++) {
         let result = results.hitTestResults[i];
-        if (result.type === 'ExistingPlaneUsingExtent') {
+        if (result.type === "ExistingPlaneUsingExtent") {
           this.setState({
             planeReticleLocation: result.transform.position,
             displayHitReticle: true,

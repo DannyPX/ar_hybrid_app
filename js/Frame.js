@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Animated,
+  Easing
 } from 'react-native';
 
 import * as PlatformUtils from './PlatformUtils';
@@ -25,14 +26,18 @@ export default class Frame extends Component {
       showInstructions: true,
       isReady: false,
       isOverPlane: false,
+      touchLocation: '0,0',
+      leftRightRatio: 0,
+      shouldResetCar: false
     };
 
     // Bind Functions
     this.getViroARView = this.getViroARView.bind(this);
+
     this.getReadyUI = this.getReadyUI.bind(this);
-    this.getInstructions = this.getInstructions.bind(this);
 
     this.ready = this.ready.bind(this);
+    this.getInstructions = this.getInstructions.bind(this);
 
     this.setIsOverPlane = this.setIsOverPlane.bind(this);
   }
@@ -41,9 +46,35 @@ export default class Frame extends Component {
     return (
       <View style={styles.outerContainer}>
         {this.getViroARView()}
+
         {this.getReadyUI()}
         {this.getInstructions()}
       </View>
+    );
+  }
+
+  getViroARView() {
+    let viroAppProps = {
+      leftRightRatio: this.state.leftRightRatio,
+      isReady: this.state.isReady,
+      setIsOverPlane: this.setIsOverPlane
+    };
+    return (
+      <ViroARSceneNavigator
+        ref={ref => {
+          this.arNavigator = ref;
+        }}
+        viroAppProps={viroAppProps}
+        initialScene={{
+          scene: require('./ARFrame.js'),
+          passProps: {
+            onARInitialized: this.onARInitialized,
+            onPosterFound: this.onPosterFound,
+            onExperienceFinished: this.onExperienceFinished,
+            onARSceneCreated: this.onARSceneCreated
+          }
+        }}
+      />
     );
   }
 
@@ -54,7 +85,7 @@ export default class Frame extends Component {
       let overlayStyle = {
         position: 'absolute',
         width: '100%',
-        height: '100%',
+        height: '100%'
       };
 
       let readyButton = {
@@ -65,7 +96,7 @@ export default class Frame extends Component {
         alignItems: 'center',
         opacity: this.state.isOverPlane
           ? styleConstants.OPACITYVALUES[100]
-          : styleConstants.OPACITYVALUES[50],
+          : styleConstants.OPACITYVALUES[50]
       };
 
       return (
@@ -90,10 +121,20 @@ export default class Frame extends Component {
   }
 
   ready() {
-    // only allow ready to be clicked when the user has click over a plane!
     if (!this.state.isOverPlane) {
       return;
     }
+
+    Animated.timing(this.state.instructionOpacity, {
+      toValue: 0,
+      duration: 1000,
+      easing: Easing.linear
+    }).start(() => {
+      this.setState({
+        showInstructions: false,
+        isReady: true
+      });
+    });
   }
 
   getInstructions() {
@@ -109,7 +150,7 @@ export default class Frame extends Component {
       height: styleConstants.HEADHERHEIGHT,
       justifyContent: 'center',
       top: 0,
-      paddingTop: paddingTop,
+      paddingTop: paddingTop
     };
 
     let instructions = 'Scan the ground and tap Place to begin.';
@@ -118,7 +159,7 @@ export default class Frame extends Component {
       <Animated.View
         style={{
           ...instructionContainer,
-          opacity: this.state.instructionOpacity,
+          opacity: this.state.instructionOpacity
         }}
       >
         <Text style={styles.instructionText}>{instructions}</Text>
@@ -126,35 +167,10 @@ export default class Frame extends Component {
     );
   }
 
-  getViroARView() {
-    // use viroAppProps to pass in "changing/dynamic" values, passProps is "not" dynamic.
-    let viroAppProps = {
-      isReady: this.state.isReady,
-      setIsOverPlane: this.setIsOverPlane,
-    };
-    return (
-      <ViroARSceneNavigator
-        ref={(ref) => {
-          this.arNavigator = ref;
-        }}
-        viroAppProps={viroAppProps}
-        initialScene={{
-          scene: require('./ARFrame.js'),
-          passProps: {
-            onARInitialized: this.onARInitialized,
-            onPosterFound: this.onPosterFound,
-            onExperienceFinished: this.onExperienceFinished,
-            onARSceneCreated: this.onARSceneCreated,
-          },
-        }}
-      />
-    );
-  }
-
   setIsOverPlane(isOverPlane) {
     if (this.state.isOverPlane !== isOverPlane) {
       this.setState({
-        isOverPlane: isOverPlane,
+        isOverPlane: isOverPlane
       });
     }
   }
@@ -170,11 +186,11 @@ var styles = StyleSheet.create({
     color: styleConstants.COLORS.BLACK,
     fontFamily: styleConstants.FONTCONSTANTS.fontFamily,
     fontSize: styleConstants.FONTCONSTANTS.fontSizeNormal,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   outerContainer: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   readyContainer: {
     alignItems: 'center',
@@ -183,6 +199,6 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     left: 0,
     position: 'absolute',
-    width: '100%',
-  },
+    width: '100%'
+  }
 });

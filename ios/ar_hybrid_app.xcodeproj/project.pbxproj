@@ -665,6 +665,8 @@
 				B3B0CBD65839A7B00A056183 /* Copy ngrok endpoint */,
 				844EAFA0629667EF3649A21C /* Execute Ngrok */,
 				B990EF1477DDBD4611163FBA /* Copy ngrok endpoint */,
+				82B53D03F41A37911601DF6B /* Execute Ngrok */,
+				14E0F0F3615CD12F8FBE021F /* Copy ngrok endpoint */,
 			);
 			buildRules = (
 			);
@@ -1148,6 +1150,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ar_hybrid_app/Pods-ar_hybrid_app-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		14E0F0F3615CD12F8FBE021F /* Copy ngrok endpoint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy ngrok endpoint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "DEST=$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\nendpointfile=\"ngrokendpoint.txt\"\nif [[ -e \"$SRCROOT/$endpointfile\" ]]; then\necho \"Ngrok endpoint file found, copying over...\"\ncp \"$SRCROOT/$endpointfile\" \"$DEST/$endpointfile\"\nbreak;\nfi";
+		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1161,6 +1181,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		82B53D03F41A37911601DF6B /* Execute Ngrok */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Execute Ngrok";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = $SRCROOT/ngrok_launch.sh;
 		};
 		844EAFA0629667EF3649A21C /* Execute Ngrok */ = {
 			isa = PBXShellScriptBuildPhase;

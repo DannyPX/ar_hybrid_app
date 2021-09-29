@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import {
+  Button,
   Text,
   View,
   StyleSheet,
@@ -28,7 +29,8 @@ export default class Frame extends Component {
       isOverPlane: false,
       touchLocation: '0,0',
       leftRightRatio: 0,
-      shouldResetCar: false
+      shouldResetCar: false,
+      menuVisible: true
     };
 
     // Bind Functions
@@ -40,6 +42,7 @@ export default class Frame extends Component {
     this.getInstructions = this.getInstructions.bind(this);
 
     this.setIsOverPlane = this.setIsOverPlane.bind(this);
+    this.hideMenu = this.hideMenu.bind(this);
   }
 
   render() {
@@ -47,10 +50,25 @@ export default class Frame extends Component {
       <View style={styles.outerContainer}>
         {this.getViroARView()}
 
+        {
+          this.state.menuVisible
+            ? <View style={styles.menuContainer}>
+              <View style={styles.menu}>
+                <Text style={styles.header}>Operation ZAR</Text>
+                <Button title="START" onPress={this.hideMenu} />
+              </View>
+            </View>
+            : null
+        }
+
         {this.getReadyUI()}
         {this.getInstructions()}
       </View>
     );
+  }
+
+  hideMenu = () => {
+    this.setState(previousState => ({ menuVisible: !previousState.menuVisible }));
   }
 
   getViroARView() {
@@ -182,10 +200,28 @@ let paddingTop = PlatformUtils.isIPhoneX()
   : 0;
 
 var styles = StyleSheet.create({
+  header: {
+    color: styleConstants.COLORS.BLACK,
+    fontSize: 50
+  },
   instructionText: {
     color: styleConstants.COLORS.BLACK,
     fontSize: styleConstants.FONTCONSTANTS.fontSizeNormal,
     textAlign: 'center'
+  },
+  menu: {
+    alignItems: 'center',
+    height: '100%',
+    justifyContent: 'space-evenly',
+    width: '100%'
+  },
+  menuContainer: {
+    alignItems: 'center',
+    backgroundColor: styleConstants.COLORS.WHITE,
+    height: '100%',
+    justifyContent: 'center',
+    width: '100%',
+    zIndex: 9999
   },
   outerContainer: {
     flex: 1,

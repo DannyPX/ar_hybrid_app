@@ -10,6 +10,12 @@ import { getCarModel } from './modules/ARFrame/CarModel';
 import { onCameraARHitTest } from './modules/ARFrame/OnCameraARHitTest';
 import { getScanningQuads } from './modules/ARFrame/ScanningQuads';
 
+import {
+  setInitialCarDirection,
+  computeNewLocation,
+  computeAcceleration,
+} from './modules/CarMovements/CalcLocation';
+
 export default class ARFrame extends Component {
   constructor() {
     super();
@@ -30,6 +36,10 @@ export default class ARFrame extends Component {
     this._getScanningQuads = getScanningQuads.bind(this);
     this._getCarModel = getCarModel.bind(this);
     this._onCameraARHitTest = onCameraARHitTest.bind(this);
+
+    this._setInitialCarDirection = setInitialCarDirection.bind(this);
+    this._computeNewLocation = computeNewLocation.bind(this);
+    this._computeAcceleration = computeAcceleration.bind(this);
   }
 
   render() {
@@ -40,6 +50,10 @@ export default class ARFrame extends Component {
       this.setState({
         isReady: true,
       });
+
+      setTimeout(() => {
+        this._setInitialCarDirection();
+      }, 400);
     }
 
     let onCameraARHitTestCallback = this.state.isReady

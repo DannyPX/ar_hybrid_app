@@ -27,6 +27,9 @@ export function getCarModel() {
       >
         <Viro3DObject
           source={require('../../res/Voxel_Truck.obj')}
+          ref={(car) => {
+            this.carRotationNode = car;
+          }}
           position={[0, 0, 0]}
           resources={[
             require('../../res/Voxel_Truck.mtl'),

@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "prestart": "eslint 'js/**.js' && ./node_modules/react-viro/bin/run_ngrok.sh",
+    "prestart": "eslint 'js/**/**/**.js' && eslint 'js/**.js' && ./node_modules/react-viro/bin/run_ngrok.sh",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "postinstall": "npx patch-package",
-    "lint": "eslint 'js/**.js'"
+    "lint": "eslint 'js/**/**/**.js' && eslint 'js/**.js'"
   },
   "dependencies": {
     "patch-package": "^6.4.7",

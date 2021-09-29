@@ -4,11 +4,12 @@ export const COLORS = {
   WHITE: '#FFF',
   BLACK: '#000',
   WHITE20: '#FFFFFF33',
+  WHITE00: '#FFFFFF00',
 };
 export const FOOTERHEIGHT = 170;
 export const HEADHERHEIGHT = 100;
 export const FONTCONSTANTS = {
-  fontFamily: 'Poppins',
+  fontFamily: 'San Francisco',
   fontSizeNormal: 18,
 };
 

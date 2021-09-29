@@ -69,6 +69,14 @@ export function ready() {
       isReady: true,
     });
   });
+
+  setTimeout(() => {
+    Animated.timing(this.state.carControlsOpacity, {
+      toValue: 1,
+      duration: 500,
+      easing: Easing.linear,
+    }).start();
+  }, 1000);
 }
 
 var styles = StyleSheet.create({

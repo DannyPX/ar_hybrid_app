@@ -184,7 +184,6 @@ let paddingTop = PlatformUtils.isIPhoneX()
 var styles = StyleSheet.create({
   instructionText: {
     color: styleConstants.COLORS.BLACK,
-    fontFamily: styleConstants.FONTCONSTANTS.fontFamily,
     fontSize: styleConstants.FONTCONSTANTS.fontSizeNormal,
     textAlign: 'center'
   },

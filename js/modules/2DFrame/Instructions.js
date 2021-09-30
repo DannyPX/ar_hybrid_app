@@ -8,7 +8,7 @@ import * as PlatformUtils from '../../PlatformUtils';
 import * as styleConstants from '../../res/styleConstants';
 
 export function getInstructions() {
-  if (!this.state.showInstructions) {
+  if (!this.state.showInstructions && this.state.menuVisible) {
     return;
   }
 

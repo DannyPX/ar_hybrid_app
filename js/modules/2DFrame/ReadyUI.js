@@ -13,7 +13,7 @@ import {
 import * as styleConstants from '../../res/styleConstants';
 
 export function getReadyUI() {
-  if (this.state.showInstructions) {
+  if (this.state.showInstructions && !this.state.menuVisible) {
     let text = this.state.isOverPlane ? ' ' : 'Finding the floor...';
 
     let overlayStyle = {

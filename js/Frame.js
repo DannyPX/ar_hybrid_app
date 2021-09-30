@@ -1,7 +1,14 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { Button, Text, View, StyleSheet, Animated } from 'react-native';
+import {
+  Button,
+  Text,
+  View,
+  StyleSheet,
+  Animated,
+  Platform,
+} from 'react-native';
 
 import * as styleConstants from './res/styleConstants';
 
@@ -36,7 +43,7 @@ export default class Frame extends Component {
       hours: '00',
       minutes: '00',
       seconds: '00',
-      menuVisible: true
+      menuVisible: true,
     };
 
     // Bind Functions
@@ -61,16 +68,14 @@ export default class Frame extends Component {
       <View style={styles.outerContainer}>
         {this.getViroARView()}
 
-        {
-          this.state.menuVisible
-            ? <View style={styles.menuContainer}>
-              <View style={styles.menu}>
-                <Text style={styles.header}>Operation ZAR</Text>
-                <Button title="START" onPress={this.hideMenu} />
-              </View>
+        {this.state.menuVisible ? (
+          <View style={styles.menuContainer}>
+            <View style={styles.menu}>
+              <Text style={styles.header}>Operation ZAR</Text>
+              <Button title='START' onPress={this.hideMenu} />
             </View>
-            : null
-        }
+          </View>
+        ) : null}
 
         {this.getCarControls()}
         {this.getReadyUI()}
@@ -79,11 +84,16 @@ export default class Frame extends Component {
     );
   }
 
-  hideMenu = () => {
-    this.setState(previousState => ({ menuVisible: !previousState.menuVisible }));
+  hideMenu() {
+    this.setState({
+      menuVisible: false,
+    });
   }
 
   getCarControls() {
+    if (this.state.menuVisible) {
+      return;
+    }
     let controlStyle = {
       position: 'absolute',
       width: '100%',
@@ -104,24 +114,26 @@ export default class Frame extends Component {
 var styles = StyleSheet.create({
   header: {
     color: styleConstants.COLORS.BLACK,
-    fontSize: 50
+    fontSize: 50,
   },
   menu: {
     alignItems: 'center',
     height: '100%',
     justifyContent: 'space-evenly',
-    width: '100%'
+    width: '100%',
   },
   menuContainer: {
     alignItems: 'center',
     backgroundColor: styleConstants.COLORS.WHITE,
+    elevation: Platform.OS === 'android' ? 50 : 0,
     height: '100%',
     justifyContent: 'center',
+    position: 'absolute',
     width: '100%',
-    zIndex: 9999
+    zIndex: 9999,
   },
   outerContainer: {
     flex: 1,
-    flexDirection: 'column'
-  }
+    flexDirection: 'column',
+  },
 });

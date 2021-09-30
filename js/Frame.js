@@ -10,6 +10,7 @@ import { getViroARView, setIsOverPlane } from './modules/2DFrame/ViroARView';
 import { getInstructions } from './modules/2DFrame/Instructions';
 
 import { getDrivingPedals } from './modules/Controls/DrivingPedals';
+import { getSteeringButtons } from './modules/Controls/SteeringButtons';
 import { getPressDown, getPressUp } from './modules/Controls/Controls';
 
 export default class Frame extends Component {
@@ -46,6 +47,8 @@ export default class Frame extends Component {
 
     this.getCarControls = this.getCarControls.bind(this);
     this.getDrivingPedals = getDrivingPedals.bind(this);
+    this.getSteeringButtons = getSteeringButtons.bind(this);
+
     this.getPressDown = getPressDown.bind(this);
     this.getPressUp = getPressUp.bind(this);
   }
@@ -72,6 +75,7 @@ export default class Frame extends Component {
       <Animated.View style={controlStyle}>
         {/* These are the controls to drive the car */}
         {this.getDrivingPedals()}
+        {this.getSteeringButtons()}
       </Animated.View>
     );
   }

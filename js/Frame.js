@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, StyleSheet, Animated } from 'react-native';
+import { Button, Text, View, StyleSheet, Animated } from 'react-native';
 
 import * as styleConstants from './res/styleConstants';
 
@@ -36,6 +36,7 @@ export default class Frame extends Component {
       hours: '00',
       minutes: '00',
       seconds: '00',
+      menuVisible: true
     };
 
     // Bind Functions
@@ -51,18 +52,37 @@ export default class Frame extends Component {
 
     this.getPressDown = getPressDown.bind(this);
     this.getPressUp = getPressUp.bind(this);
+
+    this.hideMenu = this.hideMenu.bind(this);
   }
 
   render() {
     return (
       <View style={styles.outerContainer}>
         {this.getViroARView()}
+
+        {
+          this.state.menuVisible
+            ? <View style={styles.menuContainer}>
+              <View style={styles.menu}>
+                <Text style={styles.header}>Operation ZAR</Text>
+                <Button title="START" onPress={this.hideMenu} />
+              </View>
+            </View>
+            : null
+        }
+
         {this.getCarControls()}
         {this.getReadyUI()}
         {this.getInstructions()}
       </View>
     );
   }
+
+  hideMenu = () => {
+    this.setState(previousState => ({ menuVisible: !previousState.menuVisible }));
+  }
+
   getCarControls() {
     let controlStyle = {
       position: 'absolute',
@@ -82,8 +102,26 @@ export default class Frame extends Component {
 }
 
 var styles = StyleSheet.create({
+  header: {
+    color: styleConstants.COLORS.BLACK,
+    fontSize: 50
+  },
+  menu: {
+    alignItems: 'center',
+    height: '100%',
+    justifyContent: 'space-evenly',
+    width: '100%'
+  },
+  menuContainer: {
+    alignItems: 'center',
+    backgroundColor: styleConstants.COLORS.WHITE,
+    height: '100%',
+    justifyContent: 'center',
+    width: '100%',
+    zIndex: 9999
+  },
   outerContainer: {
     flex: 1,
-    flexDirection: 'column',
-  },
+    flexDirection: 'column'
+  }
 });

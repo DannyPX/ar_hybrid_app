@@ -4,7 +4,7 @@
 o 
 
 # material
-mtllib Voxel_Truck.mtl
+mtllib Truck.mtl
 usemtl palette
 
 # normals

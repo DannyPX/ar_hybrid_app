@@ -28,8 +28,8 @@ export function getScanningQuads() {
         source={require('../../res/Voxel_Square_Full.obj')}
         visible={this.state.foundPlane}
         resources={[
-          require('../../res/Voxel_Square_Full.mtl'),
-          require('../../res/Voxel_Square_Full.png'),
+          require('../../res/Square_Full.mtl'),
+          require('../../res/texture.png'),
         ]}
         scale={[0.2, 0.2, 0.2]}
         position={[-1.1, -0.5, 1]}
@@ -39,8 +39,8 @@ export function getScanningQuads() {
         source={require('../../res/Voxel_Square_Corners.obj')}
         visible={!this.state.foundPlane}
         resources={[
-          require('../../res/Voxel_Square_Corners.mtl'),
-          require('../../res/Voxel_Square_Corners.png'),
+          require('../../res/Square_Corners.mtl'),
+          require('../../res/texture.png'),
         ]}
         scale={[0.2, 0.2, 0.2]}
         position={[-1.1, -0.5, 1]}

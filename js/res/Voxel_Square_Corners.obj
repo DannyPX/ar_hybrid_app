@@ -4,7 +4,7 @@
 o 
 
 # material
-mtllib Voxel_Square_Corners.mtl
+mtllib Square_Corners.mtl
 usemtl palette
 
 # normals

@@ -32,8 +32,8 @@ export function getCarModel() {
           }}
           position={[0, 0, 0]}
           resources={[
-            require('../../res/Voxel_Truck.mtl'),
-            require('../../res/Voxel_Truck.png'),
+            require('../../res/Truck.mtl'),
+            require('../../res/texture.png'),
           ]}
           type='OBJ'
         />

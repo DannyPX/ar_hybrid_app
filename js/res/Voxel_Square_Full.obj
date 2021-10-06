@@ -4,7 +4,7 @@
 o 
 
 # material
-mtllib Voxel_Square_Full.mtl
+mtllib Square_Full.mtl
 usemtl palette
 
 # normals
